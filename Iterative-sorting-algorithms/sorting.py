@@ -23,7 +23,7 @@ def bubble_sort(items):
     for i in range(len(items)):
         # moves the largest item at the end each time
         for j in range(len(items)):
-            if (j < len(items) and items[j] > items[j+1]):
+            if (j < len(items)-1 and items[j] > items[j+1]):
                 items[j], items[j+1] = items[j+1], items[j]
 
     return items
