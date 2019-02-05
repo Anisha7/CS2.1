@@ -1,4 +1,5 @@
 #!python
+import random
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
@@ -76,13 +77,40 @@ def merge_sort(items):
     # Merge sorted halves into one list in sorted order
     items[:] = merge(upper,lower) #O(N)
 
+def partitionRandomPiv(items, low, high):
+    piv_index = low + (high-low)/2
+    pivot = items[piv_index]
+    print("pivot index: ", piv_index)
+    for i in range(low, piv_index):
+        print('i',i)
+        # Move items greater than pivot into back of range [p+1...high]
+        if (items[i] >= pivot):
+            print('here')
+            item = items.pop(i)
+            print(item)
+            items.insert(piv_index, item)
+            piv_index -= 1
+        print(items)
+
+    print("after")
+    for i in range(piv_index+1, high):
+        print('i', i)
+        # Move items less than pivot into front of range [low...p-1]
+        if (items[i] < pivot):
+            item = items.pop(i)
+            items.insert(low, item)
+            piv_index += 1
+        print(items)
+
+    return piv_index
+
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
     `[low...high]` by choosing a pivot (first element in the array) from
     that range, moving pivot into index `p`, items less than pivot into range
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
+    Running time: O(N) because it loops through and checks each item in the array
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Choose a pivot any way and document your method in docstring above
     pivot = items[low]
@@ -118,18 +146,19 @@ def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
     TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+     Worst case running time: O(N**2) In the worst case, it will run quick sort N times.
+    TODO: Memory usage: O(1) because I'm not allocating new arrays"""
     # Check if high and low range bounds have default values (not given)
     if (low == None):
         low = 0
     if (high == None):
         high = len(items)
     # Check if list or range is so small it's already sorted (base case)
-    if (high-low < 2 or is_sorted(items)):
+    if (high-low < 2 or is_sorted(items)): # O(N)
         return
     # Partition items in-place around a pivot and get index of pivot
-    pivot_index = partition(items, low, high)
+    pivot_index = partition(items, low, high) # O(N)
+    # pivot_index = partitionRandomPiv(items, low, high) # O(N)
     # Sort each sublist range by recursively calling quick sort
     quick_sort(items, low, pivot_index)
     quick_sort(items, pivot_index+1, high)
