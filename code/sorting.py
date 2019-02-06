@@ -1,185 +1,143 @@
+#!python
 
-def is_sorted(items):
-    """Return a boolean indicating whether given items are in sorted order.
-    Running time: O(N) Why and under what conditions?
-    Memory usage: O(1) Why and under what conditions?"""
-    # TODO: Check that all adjacent items are in order, return early if not
-    prev = items[0]
-    for i in range(1,len(items)):
-        if (items[i] < prev):
-            return False
-        prev = items[i]
-    return True
+from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
+from sorting_recursive import split_sort_merge, merge_sort, quick_sort
+from sorting_integer import counting_sort, bucket_sort
 
 
-def bubble_sort(items):
-    """Sort given items by swapping adjacent items that are out of order, and
-    repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
+# def is_sorted(items):
+#     """Return a boolean indicating whether given items are in sorted order.
+#     Running time: O(N) Why and under what conditions?
+#     Memory usage: O(1) Why and under what conditions?"""
+#     # TODO: Check that all adjacent items are in order, return early if not
+#     if (items == None): return True
+#     prev = None
+#     for i in range(0,len(items)):
+#         if prev == None:
+#             prev = items[i]
+#         if (items[i] < prev):
+#             return False
+#         prev = items[i]
+#     return True
 
-    for i in range(len(items)):
-        # moves the largest item at the end each time
-        for j in range(len(items)):
-            if (j < len(items)-1 and items[j] > items[j+1]):
-                items[j], items[j+1] = items[j+1], items[j]
 
-    return items
+# def bubble_sort(items):
+#     """Sort given items by swapping adjacent items that are out of order, and
+#     repeating until all items are in sorted order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Repeat until all items are in sorted order
+#     # TODO: Swap adjacent items that are out of order
 
-def selection_sort(items):
-    """Sort given items by finding minimum item, swapping it with first
-    unsorted item, and repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
-    for i in range(len(items)):
-        # find min element
-        temp = i
-        for j in range(i, len(items)):
-            if (items[temp] > items[j]):
-                temp = j
-        # swap
-        items[i], items[temp] = items[temp], items[i]
+#     for i in range(len(items)):
+#         # moves the largest item at the end each time
+#         for j in range(len(items)):
+#             if (j < len(items)-1 and items[j] > items[j+1]):
+#                 items[j], items[j+1] = items[j+1], items[j]
+
+#     return items
+
+# def selection_sort(items):
+#     """Sort given items by finding minimum item, swapping it with first
+#     unsorted item, and repeating until all items are in sorted order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Repeat until all items are in sorted order
+#     # TODO: Find minimum item in unsorted items
+#     # TODO: Swap it with first unsorted item
+#     for i in range(len(items)):
+#         # find min element
+#         temp = i
+#         for j in range(i, len(items)):
+#             if (items[temp] > items[j]):
+#                 temp = j
+#         # swap
+#         items[i], items[temp] = items[temp], items[i]
     
-    return items
+#     return items
 
 
-def insertion_sort(items):
-    """Sort given items by taking first unsorted item, inserting it in sorted
-    order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
-    for i in range(len(items)):
-        # chosen item = items[i]
-        # swap item with prev until prev is less than item
-        j = i # track item index
-        while (j > 0 and items[j] < items[j-1]):
-            items[j-1], items[j] = items[j], items[j-1]
-            j -= 1
-    return items
+# def insertion_sort(items):
+#     """Sort given items by taking first unsorted item, inserting it in sorted
+#     order in front of items, and repeating until all items are in order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Repeat until all items are in sorted order
+#     # TODO: Take first unsorted item
+#     # TODO: Insert it in sorted order in front of items
+#     for i in range(len(items)):
+#         # chosen item = items[i]
+#         # swap item with prev until prev is less than item
+#         j = i # track item index
+#         while (j > 0 and items[j] < items[j-1]):
+#             items[j-1], items[j] = items[j], items[j-1]
+#             j -= 1
+#     return items
 
 
-def merge(items1, items2):
-    """Merge given lists of items, each assumed to already be in sorted order,
-    and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
-    result = []
-    while (len(items1) != 0 and len(items2) != 0):
-        if (items1[0] > items2[0]):
-            result.append(items2[0])
-            items2 = items2[1:]
-        else:
-            result.append(items1[0])
-            items1 = items1[1:]
+# def merge(items1, items2):
+#     """Merge given lists of items, each assumed to already be in sorted order,
+#     and return a new list containing all items in sorted order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Repeat until one list is empty
+#     # TODO: Find minimum item in both lists and append it to new list
+#     # TODO: Append remaining items in non-empty list to new list
+#     result = []
+#     while (len(items1) != 0 and len(items2) != 0):
+#         if (items1[0] > items2[0]):
+#             result.append(items2[0])
+#             items2 = items2[1:]
+#         else:
+#             result.append(items1[0])
+#             items1 = items1[1:]
     
-    if (len(items1) > 0):
-        result += items1
-    if (len(items2) > 0):
-        result += items2
+#     if (len(items1) > 0):
+#         result += items1
+#     if (len(items2) > 0):
+#         result += items2
         
-    return result
+#     return result
 
 
-def split_sort_merge(items):
-    """Sort given items by splitting list into two approximately equal halves,
-    sorting each with an iterative sorting algorithm, and merging results into
-    a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Split items list into approximately equal halves
-    mid = len(items)//2
-    upper = items[:mid]
-    lower = items[mid:]
-    # TODO: Sort each half using any other sorting algorithm
-    upper.sort()
-    lower.sort()
-    # TODO: Merge sorted halves into one list in sorted order
-    result = merge(upper,lower)
-    items = result
-    return items
+# def split_sort_merge(items):
+#     """Sort given items by splitting list into two approximately equal halves,
+#     sorting each with an iterative sorting algorithm, and merging results into
+#     a list in sorted order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Split items list into approximately equal halves
+#     mid = len(items)//2
+#     upper = items[:mid]
+#     lower = items[mid:]
+#     # TODO: Sort each half using any other sorting algorithm
+#     upper.sort()
+#     lower.sort()
+#     # TODO: Merge sorted halves into one list in sorted order
+#     result = merge(upper,lower)
+#     items = result
+#     return items
 
 
-def merge_sort(items):
-    """Sort given items by splitting list into two approximately equal halves,
-    sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    if (len(items) < 2):
-        return items
-    # TODO: Split items list into approximately equal halves
-    mid = len(items)//2
-    upper = items[:mid]
-    lower = items[mid:]
-    # TODO: Sort each half by recursively calling merge sort
-    upper = merge_sort(upper)
-    lower = merge_sort(lower)
-    # TODO: Merge sorted halves into one list in sorted order
-    result = merge(upper,lower)
-    items = result
-    return items
-
-
-def partition(items, low, high):
-    """Return index `p` after in-place partitioning given items in range
-    `[low...high]` by choosing a pivot (TODO: document your method here) from
-    that range, moving pivot into index `p`, items less than pivot into range
-    `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
-
-
-def quick_sort(items, low=None, high=None):
-    """Sort given items in place by partitioning items in range `[low...high]`
-    around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
-
-
-def counting_sort(numbers):
-    """Sort given numbers (integers) by counting occurrences of each number,
-    then looping over counts and copying that many numbers into output list.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Find range of given numbers (minimum and maximum integer values)
-    # TODO: Create list of counts with a slot for each number in input range
-    # TODO: Loop over given numbers and increment each number's count
-    # TODO: Loop over counts and append that many numbers into output list
-    # FIXME: Improve this to mutate input instead of creating new output list
-
-
-def bucket_sort(numbers, num_buckets=10):
-    """Sort given numbers by distributing into buckets representing subranges,
-    sorting each bucket, and combining contents of all buckets in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Find range of given numbers (minimum and maximum integer values)
-    # TODO: Create list of buckets to store numbers in subranges of input range
-    # TODO: Loop over given numbers and place each item in appropriate bucket
-    # TODO: Sort each bucket using any sorting algorithm (recursive or another)
-    # TODO: Loop over buckets and append each bucket's numbers into output list
-    # FIXME: Improve this to mutate input instead of creating new output list
+# def merge_sort(items):
+#     """Sort given items by splitting list into two approximately equal halves,
+#     sorting each recursively, and merging results into a list in sorted order.
+#     TODO: Running time: ??? Why and under what conditions?
+#     TODO: Memory usage: ??? Why and under what conditions?"""
+#     # TODO: Check if list is so small it's already sorted (base case)
+#     if (len(items) < 2):
+#         return items
+#     # TODO: Split items list into approximately equal halves
+#     mid = len(items)//2
+#     upper = items[:mid]
+#     lower = items[mid:]
+#     # TODO: Sort each half by recursively calling merge sort
+#     upper = merge_sort(upper)
+#     lower = merge_sort(lower)
+#     # TODO: Merge sorted halves into one list in sorted order
+#     result = merge(upper,lower)
+#     items = result
+#     return items
 
 
 def random_ints(count=20, min=1, max=50):

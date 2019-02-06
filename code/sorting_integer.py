@@ -40,7 +40,7 @@ def counting_sort(numbers):
     # 15 + 4 = 19, everything less than 18 in one bucket
     # 15,   19,   23,   27,   31,   35, 39,   43,   47, 51,
     #   [15], [20], [25], [30], [33], [], [44], [50], [], []
-def bucket_sort(numbers, num_buckets=10):
+def bucket_sort(numbers, numBuckets=10):
     """Sort given numbers by distributing into buckets representing subranges,
     then sorting each bucket and concatenating all buckets in sorted order.
     TODO: Running time: ??? Why and under what conditions?
@@ -52,30 +52,32 @@ def bucket_sort(numbers, num_buckets=10):
     totalRange = maxNum - minNum
 
     # Create list of buckets to store numbers in subranges of input range
-    bucket = []
-    for i in range(num_buckets):
-        bucket.append([])
+    buckets = []
+    for i in range(numBuckets):
+        buckets.append([])
 
     # Loop over given numbers and place each item in appropriate bucket
-    incr = totalRange//(num_buckets-1)
+    # note: make sure num_buckets-1 > 0
+    incr = totalRange//(numBuckets-1)
     if (incr == 0):
         incr = 1
-
+    
     for num in numbers:
         i = (num-minNum)//incr
-        bucket[i].append(num)
+        buckets[i].append(num)
 
     # Sort each bucket using any sorting algorithm (recursive or another)
-    for buck in bucket: #m*nlogn, m = buckets, n = items in bucket
-        buck.sort() #nlogn
+    for bucket in buckets: #m*nlogn, m = buckets, n = items in bucket
+        bucket.sort() #nlogn
     
     # Loop over buckets and append each bucket's numbers into output list
     i = 0
-    for buck in bucket:
-        for num in buck:
+    for bucket in buckets:
+        for num in bucket:
             numbers[i] = num
             i += 1
     # Improve this to mutate input instead of creating new output list
+    # print(numbers)
     return numbers
 
 
