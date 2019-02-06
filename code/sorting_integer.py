@@ -16,17 +16,20 @@ def counting_sort(numbers):
     listLen = maxNum - minNum + 1
     # Create list of counts with a slot for each number in input range
     countList = [0]*listLen
+
     # Loop over given numbers and increment each number's count
-    while len(numbers)>0: # O(N)
-        num = numbers.pop()
+    for num in numbers:
         i = num - minNum
         countList[i] += 1
     # Loop over counts and append that many numbers into output list
+    j = 0
     for i in range(len(countList)): # O(N)
         count = countList[i]
         while count > 0:
-            numbers.append(i + minNum)
+            numbers[j] = i+minNum
+            # numbers.append(i + minNum)
             count -= 1
+            j += 1
     # Improve this to mutate input instead of creating new output list
     return numbers
 
@@ -47,27 +50,31 @@ def bucket_sort(numbers, num_buckets=10):
     minNum = min(numbers)
     maxNum = max(numbers)
     totalRange = maxNum - minNum
+
     # Create list of buckets to store numbers in subranges of input range
     bucket = []
     for i in range(num_buckets):
         bucket.append([])
+
     # Loop over given numbers and place each item in appropriate bucket
     incr = totalRange//(num_buckets-1)
     if (incr == 0):
         incr = 1
-    while len(numbers) > 0:
-        num = numbers.pop()
+
+    for num in numbers:
         i = (num-minNum)//incr
         bucket[i].append(num)
 
     # Sort each bucket using any sorting algorithm (recursive or another)
-    for buck in bucket:
-        buck.sort()
+    for buck in bucket: #m*nlogn, m = buckets, n = items in bucket
+        buck.sort() #nlogn
     
     # Loop over buckets and append each bucket's numbers into output list
+    i = 0
     for buck in bucket:
         for num in buck:
-            numbers.append(num)
+            numbers[i] = num
+            i += 1
     # Improve this to mutate input instead of creating new output list
     return numbers
 
