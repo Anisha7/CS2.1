@@ -1,3 +1,5 @@
+import sys
+
 class DictTrie(object):
     def __init__(self, words=[]):
         self.d = dict()
@@ -81,6 +83,32 @@ class DictTrie(object):
         result = []
         self.scrabbleHelper(prefix, letters, result, self.d)
         return result
+
+def gameLoop(trie):
+    gameLoop = True
+    while gameLoop == True:
+        print('Type "auto" if you would like to try the autocomplete program.\n Type "scrabble" if you would like scrabble words.\nType "q" if you would like to quit')
+        gameType = raw_input('Type here: ')
+            
+        if gameType.lower() == "auto":
+            prefix = raw_input("Give me a prefix: ")
+            result = trie.findWordsWithPrefix(prefix)
+            print(result)
+            print(" ")
+
+        if gameType.lower() == "scrabble":
+            print("Give me all the letters in your hand, separated by spaces: ")
+            letters = raw_input("Type here: ")
+            letters = letters.split(' ')
+            prefix = raw_input("Give me a prefix: ")
+            result = trie.scrabbleWordFinder(prefix, letters)
+            print(result)
+            print(" ")
+        
+        if gameType.lower() == 'q':
+            gameLoop = False
+            print(" ")
+            print("Thanks, b-bye!")
         
 
 if __name__ == '__main__':
@@ -90,10 +118,8 @@ if __name__ == '__main__':
     content = list(file)
     # print('')
     trie = DictTrie(content)
-    result = trie.findWordsWithPrefix('a')
-    # print(result)
+    
+    gameLoop(trie)
+        
 
-    letters = ['a', 'p', 'm', 'o', 'n', 'l', 'e']
-    result = trie.scrabbleWordFinder('ap', letters)
-    # print(result)
 
