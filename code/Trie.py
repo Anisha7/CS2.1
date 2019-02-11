@@ -10,6 +10,8 @@ class Trie(object):
     def __init__(self, words = []):
         self.head = Node('')
         for word in words:
+            word = word.strip('\n')
+            word = word.strip('\r\n')
             self.add(word)
     
     def findNode(self, word, node):
@@ -75,4 +77,31 @@ class Trie(object):
         self.findWordsWithPrefixHelper(result, node, prefix)
         return result
 
+
+def gameLoop(trie):
+    gameLoop = True
+    while gameLoop == True:
+        print('Type "p" to play and "q" if you would like to quit')
+        gameType = raw_input('Type here: ')
+            
+        if gameType.lower() == "p":
+            prefix = raw_input("Give me a prefix: ")
+            result = trie.findWordsWithPrefix(prefix)
+            print(result)
+            print(" ")
         
+        if gameType.lower() == 'q':
+            gameLoop = False
+            print(" ")
+            print("Thanks, b-bye!")
+
+if __name__ == '__main__':
+    # content= ['hello', 'lone', 'hen', 'hear']
+    file = open('/usr/share/dict/words','r')
+    # file = open('scrabbleWords.txt','r')
+    content = list(file)
+    # print('')
+    trie = Trie(content)
+    # result = trie.findWordsWithPrefix('apple')
+    # print(result)
+    gameLoop(trie)
