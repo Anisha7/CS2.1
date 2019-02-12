@@ -48,6 +48,7 @@ class Trie(object):
             node = self.addLetter(word[i], node)
             i += 1
 
+        # set word to true at last node
         node.isWord = True
         return
 
