@@ -1,3 +1,5 @@
+# optimize using [None]*26, and use chr/ord functions to find/set indices (0-25) = to a letter
+
 class Node(object):
     def __init__(self, data = None, isWord = False):
         self.data = data
@@ -9,20 +11,28 @@ class Node(object):
 class Trie(object):
     def __init__(self, words = []):
         self.head = Node('')
+        # add all words to trie
         for word in words:
             word = word.strip('\n')
-            word = word.strip('\r\n')
+            # remove grammar/symbols
+            word = word.strip('\r\n').strip("'s").strip(',').strip('.').strip(':').strip(';')
             self.add(word)
     
-    def findNode(self, word, node):
-        if (len(word) <= 0):
+    # find the node at the end of the word
+    # used to find a prefix
+    def findNode(self, word, node, i=0):
+        # if checked all letters, node is found
+        if (i >= len(word)):
             return node
+        # if node is none, word doesn't exist
         if (node == None):
             return None
 
+        # check each child for curr letter (word[i])
         for child in node.children:
-            if (child.data == word[0]):
-                return self.findNode(word[1:], child)
+            if (child.data == word[i]):
+                # recursive call to deal with next letter
+                return self.findNode(word, child, i+1)
         
         return None
 
@@ -39,6 +49,7 @@ class Trie(object):
     def add(self, word):
         node = self.findNode(word, self.head)
         if (node != None):
+            node.count += 1
             node.isWord = True
             return
         
@@ -50,6 +61,13 @@ class Trie(object):
 
         # set word to true at last node
         node.isWord = True
+        node.count += 1
+        return
+
+    def remove(self, word):
+        node = self.findNode(word, self.d)
+        if (node != None):
+            node['isWord'] = False
         return
 
     # find if a word exists in trie
@@ -78,6 +96,31 @@ class Trie(object):
         self.findWordsWithPrefixHelper(result, node, prefix)
         return result
 
+    def search(self, prefix):
+        return self.findWordsWithPrefix(prefix)
+
+    # finds all words, counts and append to result array
+    def findWordsWithPrefixCountsHelper(self, result, node, prefix):
+        if (node.isWord == True):
+            result.append((prefix, node.count))
+
+        for child in node.children:
+            self.findWordsWithPrefixCountsHelper(result, child, prefix+child.data)
+        
+        return
+
+    # find all words with the given prefix
+    def findWordsWithPrefixCounts(self, prefix):
+        node = self.findNode(prefix, self.head)
+        if (node == None):
+            return []
+        result = []
+        self.findWordsWithPrefixCountsHelper(result, node, prefix)
+        return result
+
+
+    
+
 
 def gameLoop(trie):
     gameLoop = True
@@ -89,6 +132,7 @@ def gameLoop(trie):
             prefix = raw_input("Give me a prefix: ")
             result = trie.findWordsWithPrefix(prefix)
             print(result)
+            print(trie.findWordsWithPrefixCounts(prefix))
             print(" ")
         
         if gameType.lower() == 'q':
